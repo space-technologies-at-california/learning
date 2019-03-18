@@ -161,6 +161,7 @@ def parse_and_execute_grid_search(cmd, args):
         eg.add(k, v, shorthand=given_shorthands.get(k))
     eg.run(algo, **run_kwargs)
 
+import pdb; pdb.set_trace()
 
 if __name__ == '__main__':
     """

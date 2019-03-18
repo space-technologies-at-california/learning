@@ -8,6 +8,8 @@ from spinup.utils.logx import EpochLogger
 from spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
 from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
 
+from spinup.algos.ppo.airover.rover_gym.gym_rover.envs.GoalPointEnv1 import *
+
 class PPOBuffer:
   """
   "A buffer for storing trajectories experienced by a PPO agent interacting
@@ -192,7 +194,7 @@ def ppo(env_fn,
   actor_critic=core.mlp_actor_critic,
   ac_kwargs=dict(),
   seed=0,
-  steps_per_epoch=4000,
+  steps_per_epoch=30,
   epochs=50,
   gamma=0.99,
   clip_ratio=0.2,
@@ -281,6 +283,8 @@ def ppo(env_fn,
   save_freq (int): How often (in terms of gap between epochs) to save
       the current policy and value function." - OpenAI
   """
+  env_fn = GoalPointEnv1  
+
   logger = EpochLogger(**logger_kwargs)
   logger.save_config(locals())
 
@@ -441,6 +445,7 @@ def ppo(env_fn,
   # d = done? (whether current episode in env is over)
   # ep_ret = episode return
   # ep_len = length of episode so far
+  import pdb; pdb.set_trace();
   o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
 
   # "Main loop: collect experience in env and update/log each epoch"
@@ -511,6 +516,8 @@ def ppo(env_fn,
     logger.log_tabular('Time', time.time() - start_time)
     logger.dump_tabular()
 
+#import pdb; pdb.set_trace()
+
 # Just copied this in from the original OpenAI implementation
 # for testing
 if __name__ == '__main__':
@@ -532,7 +539,12 @@ if __name__ == '__main__':
     from spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
-    ppo(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,
+    from spinup.algos.ppo.airover.rover_gym.gym_rover.envs.GoalPointEnv1 import *
+
+
+    #import pdb; pdb.set_trace();
+
+    ppo(GoalPointEnv1, actor_critic=core.mlp_actor_critic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l), gamma=args.gamma, 
         seed=args.seed, steps_per_epoch=args.steps, epochs=args.epochs,
         logger_kwargs=logger_kwargs, pi_lr=0.001, v_lr=0.001)
