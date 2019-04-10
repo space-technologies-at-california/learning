@@ -8,16 +8,16 @@ Also note that I've only tested this on Mac.  I suspect it will
 work with Linux, but am less sure about Windows.  (Mostly because
 OpenAI says they're not sure whether it works with Windows!)
 
-1. First, we will create a conda environment for learning:
-`conda create -n stac-learning python=3.6`
+1. First, we will create a virtual environment for learning:
+``virtualenv -p `which python3` stac``
 
 2. Then, activate this environment:
-`source activate stac-learning`
+`source stac-learning/bin/activate`
 
-Always activate this conda environment before using 
-algorithms from this repo.
+Always activate this environment before using this repo.
+You can exit the environment by typing `deactivate` when you're done working.
 
-3. Install OpenMPI:
+3. Install OpenMPI [This section is OS-dependent]:
 
 - Ubuntu: `sudo apt-get update && sudo apt-get install libopenmpi-dev`
 - Mac: `brew install openmpi`
@@ -43,6 +43,6 @@ This will run for a while; once it's done, you can run
 `python -m spinup.run plot data/test1`
 to see a plot of the results of this training.
 
-You can also run 
+You can also run
 `python -m spinup.run test_policy data/test1
 to see a video of the trained policy.
