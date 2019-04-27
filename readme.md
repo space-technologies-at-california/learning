@@ -14,7 +14,7 @@ OpenAI says they're not sure whether it works with Windows!)
 ``virtualenv -p `which python3` stac``
 
 2. Then, activate this environment:
-`source stac-learning/bin/activate`
+`source stac/bin/activate`
 
 Always activate this environment before using this repo.
 You can exit the environment by typing `deactivate` when you're done working.
