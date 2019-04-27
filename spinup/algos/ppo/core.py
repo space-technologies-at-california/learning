@@ -6,7 +6,7 @@ import scipy.signal
 # Discrete = a number representing a discrete value
 # Box = a n-dimensional vector where values are bounded
 # "example usage: self.action_space = spaces.Box(low=-10, high=10, shape=(1,))" -OpenAI
-from gym.spaces import Box, Discrete
+from gym.spaces import Box, Discrete, Tuple
 
 EPS = 1e-8 # TODO: figure out what this is
 
@@ -39,6 +39,11 @@ def placeholder_from_space(space):
     # TODO: why don't we just return placeholder()
     # i think that does the same thing
     return tf.placeholder(dtype=tf.int32, shape=(None,))
+  elif isinstance(space, Tuple):
+    placeholders = []
+    for subspace in space:
+      placeholders.append(placeholder_from_space(subspace))
+    return placeholders
   
   # we have only implemented dealing with obs/action spaces
   # which are an instance of Box or Discrete

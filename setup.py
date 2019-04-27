@@ -20,7 +20,7 @@ setup(
         'joblib',
         'matplotlib',
         'mpi4py',
-        'numpy',
+        'numpy>=1.16',
         'pandas',
         'pytest',
         'psutil',
